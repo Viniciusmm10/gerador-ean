@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EANForge</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Righteous&family=Space+Grotesk:wght@300;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Estilos Personalizados -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <nav class="nav-header" style="justify-content: flex-end;">
+            <a href="about.html" class="nav-link">Sobre o Criador →</a>
+        </nav>
+        
+        <main class="card">
+            <header class="card-header">
+                <div class="logo-wrapper">
+                    <h1 class="logo-text">EAN<span>Forge</span></h1>
+                    <div class="logo-bar"></div>
+                </div>
+                <p class="subtitle">Gere códigos de barras EAN-13 válidos instantaneamente.</p>
+            </header>
+            
+            <div class="display-container" id="ean-display">
+                <span id="ean-code" class="code-text">0000000000000</span>
+                <button id="btn-copy" class="icon-button" aria-label="Copiar código">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <button id="btn-generate" class="btn-primary">
+                <span class="btn-text">Gerar Novo Código</span>
+                <span class="btn-shine"></span>
+            </button>
+        </main>
+        
+        <footer class="app-footer">
+            <p>Obrigado por usar o EANForge</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils.js"></script>
+    <script src="js/gs1-service.js"></script>
+    <script src="js/ean-generator.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
