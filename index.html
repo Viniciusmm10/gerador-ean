@@ -16,7 +16,7 @@
 <body>
     <div class="app-container">
         <nav class="nav-header" style="justify-content: flex-end;">
-            <a href="about.html" class="nav-link">Sobre o Criador →</a>
+            <a href="about.html" class="nav-link">Sobre o Desenvolvedor Resposável →</a>
         </nav>
         
         <main class="card">
@@ -49,8 +49,22 @@
         </footer>
     </div>
 
-    <!-- Scripts -->
-    <script src="js/utils.js"></script>
+    <div id="ean-confirm-modal" class="confirm-modal" aria-hidden="true">
+        <div class="confirm-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="ean-confirm-title" aria-describedby="ean-confirm-message">
+            <h2 id="ean-confirm-title" class="confirm-modal__title">Confirmar ação</h2>
+            <p id="ean-confirm-message" class="confirm-modal__message">
+                Você já gerou um EAN.<br>
+                Gerar outro vai substituir o atual.<br>
+                Deseja continuar?
+            </p>
+            <div class="confirm-modal__actions">
+                <button id="ean-confirm-cancel" class="btn-outline" type="button">Cancelar</button>
+                <button id="ean-confirm-accept" class="btn-primary" type="button">Gerar Novo</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->    <script src="js/utils.js"></script>
     <script src="js/gs1-service.js"></script>
     <script src="js/ean-generator.js"></script>
     <script src="js/main.js"></script>

@@ -1,6 +1,6 @@
 /**
- * Script Principal
- * DOM.
+ * Script Principal (Entry Point)
+ * Inicializa a aplicação e manipula os eventos do DOM.
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,6 +8,37 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnCopy = document.getElementById('btn-copy');
     const eanDisplay = document.getElementById('ean-display');
     const eanCodeSpan = document.getElementById('ean-code');
+    const initialEanText = (eanCodeSpan.textContent || '').trim();
+    const confirmModal = document.getElementById('ean-confirm-modal');
+    const confirmCancel = document.getElementById('ean-confirm-cancel');
+    const confirmAccept = document.getElementById('ean-confirm-accept');
+
+    let confirmResolve = null;
+
+    const openConfirmModal = () => new Promise((resolve) => {
+        confirmResolve = resolve;
+        confirmModal.classList.add('active');
+        confirmModal.setAttribute('aria-hidden', 'false');
+        confirmCancel.focus();
+    });
+
+    const closeConfirmModal = (result) => {
+        confirmModal.classList.remove('active');
+        confirmModal.setAttribute('aria-hidden', 'true');
+        if (confirmResolve) {
+            confirmResolve(result);
+            confirmResolve = null;
+        }
+    };
+
+    confirmCancel.addEventListener('click', () => closeConfirmModal(false));
+    confirmAccept.addEventListener('click', () => closeConfirmModal(true));
+    confirmModal.addEventListener('click', (e) => {
+        if (e.target === confirmModal) closeConfirmModal(false);
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && confirmModal.classList.contains('active')) closeConfirmModal(false);
+    });
 
     // Ícone SVG para restaurar após copiar
     const copyIconSVG = `
@@ -24,14 +55,31 @@ document.addEventListener('DOMContentLoaded', () => {
         </svg>
     `;
 
+    // Evento: Gerar EAN
     btnGenerate.addEventListener('click', async () => {
-       
+        const currentEan = (eanCodeSpan.textContent || '').trim();
+        const hasGeneratedEan = currentEan.length > 0 && currentEan !== initialEanText;
+        const useNativeConfirm = false;
+
+        if (hasGeneratedEan) {
+            if (useNativeConfirm) {
+                const shouldContinue = window.confirm('Você já gerou um EAN. Gerar outro vai substituir o atual. Deseja continuar?');
+                if (!shouldContinue) return;
+            } else {
+                const shouldContinue = await openConfirmModal();
+                if (!shouldContinue) return;
+            }
+        }
+
+        // Reset animation
         eanCodeSpan.classList.remove('animate-pop');
         void eanCodeSpan.offsetWidth; // Force reflow
-        
+
+        // Generate new code
         const newEan = EANGenerator.generate();
         eanCodeSpan.textContent = newEan;
         
+        // Add animation
         eanCodeSpan.classList.add('animate-pop');
 
         // Verificação silenciosa (opcional/futura)

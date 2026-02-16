@@ -202,11 +202,8 @@ body::before {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
     text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    display: inline-block;
     width: 100%;
-    text-align: center;
 }
 
 .btn-primary:hover {
@@ -341,6 +338,67 @@ body::before {
     background: white;
     color: var(--accent-color);
     box-shadow: var(--shadow-sm);
+}
+
+.confirm-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.25rem;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 999;
+}
+
+.confirm-modal.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.confirm-modal__dialog {
+    width: 100%;
+    max-width: 420px;
+    background: var(--card-bg);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 1.5rem;
+    transform: scale(0.9);
+    transition: transform 0.2s ease;
+}
+
+.confirm-modal.active .confirm-modal__dialog {
+    transform: scale(1);
+}
+
+.confirm-modal__title {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+.confirm-modal__message {
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 1.25rem;
+}
+
+.confirm-modal__actions {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.confirm-modal__actions .btn-primary,
+.confirm-modal__actions .btn-outline {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    border-radius: var(--radius-md);
 }
 
 @keyframes slideUp {
