@@ -82,14 +82,18 @@ document.addEventListener('DOMContentLoaded', () => {
         // Add animation
         eanCodeSpan.classList.add('animate-pop');
 
-        // Verificação silenciosa (opcional/futura)
-        await GS1Service.verifyEAN(newEan);
     });
 
     // Evento: Copiar EAN
-    btnCopy.addEventListener('click', () => {
+    btnCopy.addEventListener('click', async () => {
         const currentEan = eanCodeSpan.textContent;
-        Utils.copyToClipboard(currentEan);
+
+        try {
+            await Utils.copyToClipboard(currentEan);
+        } catch (error) {
+            console.error("[Clipboard] Não foi possível copiar o EAN.", error);
+            return;
+        }
         
         // Visual Feedback
         eanDisplay.classList.add('flash-success');

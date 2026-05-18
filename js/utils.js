@@ -8,9 +8,12 @@ const Utils = {
      * Copia um texto para a área de transferência
      * @param {string} text - Texto a ser copiado
      */
-    copyToClipboard: function(text) {
-        // Implementação futura
-        console.log(`[Utils] Copiando para clipboard: ${text}`);
+    copyToClipboard: async function(text) {
+        if (!navigator.clipboard || !window.isSecureContext) {
+            throw new Error("Clipboard indisponível neste navegador.");
+        }
+
+        await navigator.clipboard.writeText(text);
     },
 
     /**
